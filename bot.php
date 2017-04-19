@@ -1,4 +1,8 @@
 <?php
+/*
+osu-bot was created by asd.
+Project URL:https://coding.net/u/lslqtz/p/osu-bot/
+*/
 set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
