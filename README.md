@@ -1,3 +1,4 @@
 # osu-bot
+## License：AGPL协议，禁止用于任何其它非商业/商业项目及网站，除已有本人许可外。申请许可请电邮或QQ：admin@acgn.xyz。
 ### 一键下载指定日期（或指定日期到今天）的全部Ranked歌曲。
 Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
