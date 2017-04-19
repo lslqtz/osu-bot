@@ -40,6 +40,6 @@ Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Passw
 
 --proxy 设置HTTP/HTTPS代理
 
---socks4-proxy 设置socks4代理
+--socks4-proxy 设置Socks4代理
 
---socks5-proxy 设置socks5代理
+--socks5-proxy 设置Socks5代理
