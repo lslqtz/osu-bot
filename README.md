@@ -5,7 +5,11 @@
 安装PHP（5.3及以上）并将其设进环境变量，然后进去命令提示符（cmd）到当前目录下就可以运行了。
 #### 用法
 Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
-#### 参数说明
+#### 默认参数及参数说明（不包括必填参数）
+默认参数：php bot.php -m 0 --reapilink=https://osu.ppy.sh/api/ --redownlink=https://osu.ppy.sh/d/
+
+整个参数被[]包围的，例如[-f Full Filename]代表可填参数，未被[]包围的代表必填参数。
+
 -o 保存目录
 
 -k osu!API的Key，申请地址：https://osu.ppy.sh/p/api
