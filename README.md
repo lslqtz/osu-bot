@@ -12,15 +12,15 @@ Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Passw
 
 整个参数被[]包围的，例如[-f Full Filename]代表可填参数，未被[]包围的代表必填参数。
 
--o 保存目录
+-o 保存目录 [必选]
 
--k osu!API的Key，申请地址：https://osu.ppy.sh/p/api
+-k osu!API的Key，申请地址：https://osu.ppy.sh/p/api [必选]
 
--u osu!账号
+-u osu!账号 [必选]
 
--p osu!密码
+-p osu!密码 [必选]
 
--d 从距离今天起后退多少天
+-d 从距离今天起后退多少天 [必选]
 
 -f 全文件名（默认文件名：数字ID.osz）
 
