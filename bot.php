@@ -127,6 +127,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
 	for ($i=0;$i<count($beatmaps);$i++) {
+		$filename=$beatmaps[$i];
 		$did=explode(' ',$beatmaps[$i])[0];
 		if (!isset($opt['f']) && is_numeric($did)) {
 			$filename=$did.'.osz';
