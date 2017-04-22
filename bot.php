@@ -127,15 +127,14 @@ for ($a=$opt['d'];$a>0;$a--) {
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
 	for ($i=0;$i<count($beatmaps);$i++) {
-		$filename=$beatmaps[$i];
-		$did=explode(' ',$filename)[0];
+		$did=explode(' ',$beatmaps[$i])[0];
 		if (!isset($opt['f']) && is_numeric($did)) {
 			$filename=$did.'.osz';
 		} else {
 			$filename.='.osz';
 		}
 		if (!file_exists($opt['o'].'/'.$filename)) {
-			if ($link=getdlink($beatmaps[$i])) {
+			if ($link=getdlink($did)) {
 				if (isset($opt['redownlink'])) {
 					$link=preg_replace('/http(s?):\/\/bm(\d).ppy.sh\/d\//',$opt['redownlink'],$link);
 				}
