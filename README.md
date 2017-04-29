@@ -34,7 +34,7 @@ Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Passw
 
 --only 仅仅下载指定日期的图，不包括其它日期
 
---without-proxy-getdownlink 禁止使用代理获取下载链接（因为在代理上模拟登录osu!可能造成本地的osu!登录失效）
+--without-proxy-getdownlink 禁止使用代理登录及获取下载链接（因为在代理上访问osu!可能造成本地的osu!登录失效）
 
 --reapilink 替换API链接
 
