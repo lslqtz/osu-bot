@@ -80,6 +80,7 @@ function getfile($url) {
 	unset($url,$without_cookie);
 }
 function getdlink($did) {
+    global $opt;
 	$without_proxy=0;
 	if (isset($opt['without-proxy-getdownlink'])) {
 		$without_proxy=1;
@@ -102,6 +103,7 @@ function getcookie() {
 		$without_proxy=1;
 	}
 	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($opt['u']).'&password='.urlencode($opt['p']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
+	unset($without_proxy);
 }
 if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 3) {
 	$opt['m']=0;
