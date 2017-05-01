@@ -2,6 +2,10 @@
 
 Batch download all osu! Ranked beatmap by specified date
 
+## License
+
+osu-bot is licensed under [AGPL v3.0](LICENSE). tl;dr.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
+
 ## How to use?
 
 Install PHP 5.3+,download bot.php and use command prompt.
@@ -50,7 +54,3 @@ Default Download Link=http(s)://bm*.ppy.sh/d/
 --socks4-proxy Set Socks4 Proxy
 
 --socks5-proxy Set Socks5 Proxy
-
-## License
-
-osu-bot is licensed under [AGPL v3.0](LICENSE). tl;dr.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
