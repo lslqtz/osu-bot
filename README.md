@@ -1,53 +1,47 @@
 # osu-bot
-### License：AGPL协议，禁止用于任何其它非商业/商业项目及网站，除已有本人许可外。申请许可请电邮或QQ：admin@acgn.xyz。
-### 一键下载指定日期（或指定日期到今天）的全部Ranked歌曲。
-### API申请备注及视频教程
-申请API时，里面有两个填空框。
+### License:AGPL.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact us by email,My E-Mail:admin@acgn.xyz.
+### Bulk download the specified date(or specified date to today) all osu! Ranked beatmap.
+#### How to use?
+Install PHP 5.3+,download bot.php and use command prompt.
 
-第一个请填你自己的账号，第二个请填http:// 你自己的账号 .osupink.me就可以了，特殊字符的用户可以直接填自己的用户页。
-
-视频教程：http://osu.acgvideo.cn/osu-bot/tutorial.mp4
-#### 如何使用？
-安装PHP（5.3及以上）并将其设进环境变量，然后进去命令提示符（cmd）到当前目录下就可以运行了。
-
-你也可以直接下载php.zip，运行shell.bat，然后输入命令参数。
-#### 用法
+For Windows:you can download php.zip,and run shell.bat.
+#### Usage
 Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
-#### 默认参数及参数说明（不包括必填参数）
-默认参数：php bot.php -m 0 --reapilink=https://osu.ppy.sh/api/ --redownlink=http(s)://bm*.ppy.sh/d/
+#### Default parameters
+Default APILink=https://osu.ppy.sh/api/
 
-整个参数被[]包围的，例如[-f Full Filename]代表可填参数，未被[]包围的代表必填参数。
+Default Download Link=http(s)://bm*.ppy.sh/d/
 
--o 保存目录 [必选]
+-o Save Dir [Required]
 
--k osu!API的Key，申请地址：https://osu.ppy.sh/p/api [必选]
+-k osu!API Key,API Registration Link:https://osu.ppy.sh/p/api [Required]
 
--u osu!账号 [必选]
+-u osu!Username [Required]
 
--p osu!密码 [必选]
+-p osu!Password [Required]
 
--d 从距离今天起后退多少天 [必选]
+-d Days [Required]
 
--f 全文件名（默认文件名：数字ID.osz）
+-f Full Filename(Default Filename：Beatmap SetID.osz)
 
--m 模式（0:STD[Default],1:Taiko,2:CTB,3:osu!mania）
+-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)
 
---only 仅仅下载指定日期的图，不包括其它日期
+--only Download Only The Specified Date BeatMaps.
 
---without-proxy-getdownlink 禁止使用代理登录及获取下载链接（因为在代理上访问osu!可能造成本地的osu!登录失效）
+--without-proxy-getdownlink Don't Use Proxy Login And Get Download Link(Because The Use Of Proxy Access May Cause Local Login To Fail)
 
---reapilink 替换API链接
+--reapilink Replace API Link
 
---redownlink 替换下图链接
+--redownlink Replace Download Link
 
---downcookie 添加下图Cookie（例如bloodcat需要）
+--downcookie Add Download Cookie
 
---downreferer 添加下图Referer（例如mengsky需要）
+--downreferer Add Download Referer
 
---downuseragent 添加下图UA（例如mengsky需要）
+--downuseragent Add Download User-Agent
 
---proxy 设置HTTP/HTTPS代理
+--proxy Set HTTP/HTTPS Proxy
 
---socks4-proxy 设置Socks4代理
+--socks4-proxy Set Socks4 Proxy
 
---socks5-proxy 设置Socks5代理
+--socks5-proxy Set Socks5 Proxy
