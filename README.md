@@ -1,13 +1,18 @@
 # osu-bot
-### License:AGPL.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact us by email,My E-Mail:admin@acgn.xyz.
-### Bulk download the specified date(or specified date to today) all osu! Ranked beatmap.
-#### How to use?
+
+Batch download all osu! Ranked beatmap by specified date
+
+## How to use?
+
 Install PHP 5.3+,download bot.php and use command prompt.
 
 For Windows:you can download php.zip,and run shell.bat.
-#### Usage
+
+### Usage
+```bash
 Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
-#### Default parameters
+```
+### Default parameters
 Default APILink=https://osu.ppy.sh/api/
 
 Default Download Link=http(s)://bm*.ppy.sh/d/
@@ -45,3 +50,7 @@ Default Download Link=http(s)://bm*.ppy.sh/d/
 --socks4-proxy Set Socks4 Proxy
 
 --socks5-proxy Set Socks5 Proxy
+
+## License
+
+osu-bot is licensed under [AGPL v3.0](LICENSE). tl;dr.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
