@@ -4,7 +4,7 @@ Batch download all osu! Ranked beatmap by specified date
 
 ## License
 
-osu-bot is licensed under [AGPL v3.0](LICENSE). tl;dr.It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
+osu-bot is licensed under [AGPL v3.0](LICENSE).It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
 
 ## How to use?
 
