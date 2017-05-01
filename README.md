@@ -1,6 +1,6 @@
 # osu-bot
 
-Batch download all osu! Ranked beatmap by specified date
+Bulk download the specified date(or specified date to today) all osu! Ranked beatmap./Batch download all osu! Ranked beatmap by specified date.
 
 ## License
 
