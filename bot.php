@@ -1,12 +1,12 @@
 <?php
 /*
 osu-bot was created by asd.
-Project URL:https://github.com/lslqtz/osu-bot/
+Project URL:https://coding.net/u/lslqtz/p/osu-bot/
 */
 set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
-$opt=getopt('d:fk:m:o:p:t:u:',array('only','proxy:','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
+$opt=getopt('d:fk:m:o:p:t:u:',array('rlt:','rgt:','only','proxy:','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	global $opt;
 	$curl=curl_init();
@@ -105,11 +105,40 @@ function getcookie() {
 	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($opt['u']).'&password='.urlencode($opt['p']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
 	unset($without_proxy);
 }
+function set($t,$r) {
+	global $opt;
+	global $$t;
+	switch ($opt['m']) {
+		case 0:
+		case 2:
+			${$t}['size']=isset($r[0]) ? $r[0] : 0;
+			${$t}['approach']=isset($r[1]) ? $r[1] : 0;
+			${$t}['overall']=isset($r[2]) ? $r[2] : 0;
+			${$t}['drain']=isset($r[3]) ? $r[3] : 0;
+			${$t}['stars']=isset($r[4]) ? $r[4] : 0;
+			break;
+		case 1:
+			${$t}['size']=0;
+			${$t}['approach']=0;
+			${$t}['overall']=isset($r[0]) ? $r[0] : 0;
+			${$t}['drain']=isset($r[1]) ? $r[1] : 0;
+			${$t}['stars']=isset($r[2]) ? $r[2] : 0;
+			break;
+		case 3:
+			${$t}['size']=isset($r[0]) ? $r[0] : 0;
+			${$t}['approach']=0;
+			${$t}['overall']=isset($r[1]) ? $r[1] : 0;
+			${$t}['drain']=isset($r[2]) ? $r[2] : 0;
+			${$t}['stars']=isset($r[3]) ? $r[3] : 0;
+			break;
+	}
+	unset($t,$r);
+}
 if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 3) {
 	$opt['m']=0;
 }
 if (!isset($opt['o'],$opt['d'],$opt['k'],$opt['u'],$opt['p']) || !is_numeric($opt['d']) || !$opt['d']) {
-	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
+	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
 }
 if (!is_dir($opt['o'])) {
 	if (!mkdir($opt['o'])) {
@@ -128,8 +157,33 @@ for ($a=$opt['d'];$a>0;$a--) {
 	if (!isset($beatmaps_json[0])) {
 		die("Error:Can't Connect osu!API Or Haven't Beatmap.\n");
 	}
+	if (isset($opt['rlt'])) {
+		set('rlt',explode(':',$opt['rlt']));
+	}
+	if (isset($opt['rgt'])) {
+		set('rgt',explode(':',$opt['rgt']));
+	}
 	for ($i=0;$i<count($beatmaps_json);$i++) {
+		$rltyes=0;
+		$rgtyes=0;
+		if (isset($rlt)) {
+			if ((!$rlt['size'] || $beatmaps_json[$i]->diff_size > $rlt['size']) && (!$rlt['approach'] || $beatmaps_json[$i]->diff_approach > $rlt['approach']) && (!$rlt['overall'] || $beatmaps_json[$i]->diff_overall > $rlt['overall']) && (!$rlt['drain'] || $beatmaps_json[$i]->diff_drain > $rlt['drain']) && (!$rlt['stars'] || $beatmaps_json[$i]->diff_difficultyrating > $rlt['stars'])) {
+				$rltyes=1;
+			}
+		} else {
+			$rltyes=1;
+		}
+		if (isset($rgt)) {
+			if ((!$rgt['size'] || $beatmaps_json[$i]->diff_size > $rgt['size']) && (!$rgt['approach'] || $beatmaps_json[$i]->diff_approach > $rgt['approach']) && (!$rgt['overall'] || $beatmaps_json[$i]->diff_overall > $rgt['overall']) && (!$rgt['drain'] || $beatmaps_json[$i]->diff_drain > $rgt['drain']) && (!$rgt['stars'] || $beatmaps_json[$i]->diff_difficultyrating > $rgt['stars'])) {
+				$rgtyes=1;
+			}
+		} else {
+			$rgtyes=1;
+		}
+		if ($rltyes && $rgtyes) {
 		$beatmaps[$i]=$beatmaps_json[$i]->beatmapset_id.' '.$beatmaps_json[$i]->artist.' - '.$beatmaps_json[$i]->title;
+		}
+		unset($rltyes,$rgtyes);
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
 	for ($i=0;$i<count($beatmaps);$i++) {
