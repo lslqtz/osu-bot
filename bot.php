@@ -138,7 +138,7 @@ if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 
 	$opt['m']=0;
 }
 if (!isset($opt['o'],$opt['d'],$opt['k'],$opt['u'],$opt['p']) || !is_numeric($opt['d']) || !$opt['d']) {
-	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
+	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
 }
 if (!is_dir($opt['o'])) {
 	if (!mkdir($opt['o'])) {
