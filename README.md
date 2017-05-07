@@ -39,6 +39,8 @@ Default Download Link=http(s)://bm*.ppy.sh/d/
 
 --without-proxy-getdownlink Don't Use Proxy Login And Get Download Link(Because The Use Of Proxy Access May Cause Local Login To Fail)
 
+--rlt/rgt Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)
+
 --reapilink Replace API Link
 
 --redownlink Replace Download Link
