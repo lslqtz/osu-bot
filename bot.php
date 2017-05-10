@@ -154,7 +154,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 		$apilink='https://osu.ppy.sh/api/';
 	}
 	$beatmaps_json=json_decode(curl($apilink."get_beatmaps?$args",0,0,0,1,1,1,1,1,1,1,0));
-	if (!isset($beatmaps_json[0])) {
+	if (!is_array($beatmaps_json) || !isset($beatmaps_json[1])) {
 		die("Error:Can't Connect osu!API Or Haven't Beatmap.\n");
 	}
 	if (isset($opt['rlt'])) {
