@@ -83,7 +83,7 @@ function getdlink($did) {
 	} else {
 		return $location;
 	}
-	unset($did,$cookie,$without_proxy,$location);
+	unset($did,$without_proxy,$location);
 }
 function getcookie() {
 	global $opt;
