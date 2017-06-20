@@ -7,7 +7,7 @@ set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
 $opt=getopt('d:fk:m:o:p:t:u:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.1.\n"); }
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.2.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	global $opt;
 	$curl=curl_init();
@@ -133,7 +133,9 @@ if (!is_dir($opt['o']) && !mkdir($opt['o'])) {
 $apilink=isset($opt['reapilink']) ? $opt['reapilink'] : 'https://osu.ppy.sh/api/';
 for ($a=$opt['d'];$a>0;$a--) {
 	$beatmaps=[];
-	$args='k='.$opt['k'].'&m='.$opt['m'].'&since='.date("Y-m-d",strtotime("-$a day"));
+	$date=date("Y-m-d",strtotime("-$a day"));
+	$args='k='.$opt['k'].'&m='.$opt['m']."&since=$date";
+	echo $date.":\n";
 	$beatmaps_json=json_decode(curl($apilink."get_beatmaps?$args",0,0,0,1,1,1,1,1,1,1,0));
 	if (!is_array($beatmaps_json) || !isset($beatmaps_json[1])) {
 		die("Error:Can't Connect osu!API Or Haven't Beatmap.\n");
@@ -170,7 +172,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 	for ($i=0;$i<count($beatmaps);$i++) {
 		$filename=$beatmaps[$i];
 		$did=explode(' ',$beatmaps[$i])[0];
-		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : $filename.'.osz';
+		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : str_replace(['/','\\',':','*','"','<','>','|','?'],'-',$filename).'.osz';
 		if (!file_exists($opt['o'].'/'.$filename)) {
 			if ($link=getdlink($did)) {
 				if (isset($opt['redownlink'])) {
@@ -198,7 +200,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 	if (isset($opt['only'])) {
 		break;
 	}
-	unset($args,$beatmaps,$beatmaps_json);
+	unset($args,$date,$beatmaps,$beatmaps_json);
 }
 unset($apilink);
 ?>
