@@ -14,20 +14,14 @@ For Windows:you can download php.zip,and run shell.bat.
 
 ### Usage
 ```bash
-php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
+php bot.php -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].
 ```
 ### Default parameters
+You must have osu!Username,osu!Password and osu!APIKey!
+
 Default APILink=https://osu.ppy.sh/api/
 
 Default Download Link=http(s)://bm*.ppy.sh/d/
-
--o Save Dir [Required]
-
--k osu!API Key,API Registration Link:https://osu.ppy.sh/p/api [Required]
-
--u osu!Username [Required]
-
--p osu!Password [Required]
 
 -d Days [Required]
 
