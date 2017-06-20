@@ -6,10 +6,11 @@ Project URL:https://coding.net/u/lslqtz/p/osu-bot/
 set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
-$opt=getopt('d:fk:m:o:p:t:u:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.2.\n"); }
+$opt=getopt('d:fm:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.3.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	global $opt;
+	if (!function_exists('curl_init')) { die("Error:Can't Find curl.\n"); }
 	$curl=curl_init();
 	curl_setopt($curl,CURLOPT_URL,$url);
 	if ($head) {
@@ -88,8 +89,9 @@ function getdlink($did) {
 }
 function getcookie() {
 	global $opt;
+	global $userinfo;
 	$without_proxy=isset($opt['without-proxy-getdownlink']) ? 1 : 0;
-	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($opt['u']).'&password='.urlencode($opt['p']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
+	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($userinfo['username']).'&password='.urlencode($userinfo['password']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
 	unset($without_proxy);
 }
 function set($t,$r) {
@@ -124,17 +126,37 @@ function set($t,$r) {
 if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 3) {
 	$opt['m']=0;
 }
-if (!isset($opt['o'],$opt['d'],$opt['k'],$opt['u'],$opt['p']) || !is_numeric($opt['d']) || !$opt['d']) {
-	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-v/--version Version] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
+if (!is_numeric($opt['d']) || !$opt['d']) {
+	die("Usage:php bot.php -d [Before Days] [-v/--version Version] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
 }
-if (!is_dir($opt['o']) && !mkdir($opt['o'])) {
+echo "Enter Your osu! Username:";
+$userinfo['username']=trim(fgets(STDIN));
+if (empty($userinfo['username'])) {
+	die("\nPlease Enter Your osu! Username.\n");
+}
+echo "Enter Your osu! Password:";
+$userinfo['password']=trim(fgets(STDIN));
+if (empty($userinfo['password'])) {
+	die("\nPlease Enter Your osu! Password.\n");
+}
+echo "Enter Your osu! APIKey:";
+$userinfo['apikey']=trim(fgets(STDIN));
+if (empty($userinfo['apikey'])) {
+	die("\nPlease Enter Your osu! APIKey.\n");
+}
+echo "Enter Your Save Dir:";
+$userinfo['savedir']=trim(fgets(STDIN));
+if (empty($userinfo['savedir'])) {
+	die("\nPlease Enter Your Save Dir.\n");
+}
+if (!is_dir($userinfo['savedir']) && !mkdir($userinfo['savedir'])) {
 	die("Error:Can't Create Dir.\n");
 }
 $apilink=isset($opt['reapilink']) ? $opt['reapilink'] : 'https://osu.ppy.sh/api/';
 for ($a=$opt['d'];$a>0;$a--) {
 	$beatmaps=[];
 	$date=date("Y-m-d",strtotime("-$a day"));
-	$args='k='.$opt['k'].'&m='.$opt['m']."&since=$date";
+	$args='k='.$userinfo['apikey'].'&m='.$opt['m']."&since=$date";
 	echo $date.":\n";
 	$beatmaps_json=json_decode(curl($apilink."get_beatmaps?$args",0,0,0,1,1,1,1,1,1,1,0));
 	if (!is_array($beatmaps_json) || !isset($beatmaps_json[1])) {
@@ -173,19 +195,19 @@ for ($a=$opt['d'];$a>0;$a--) {
 		$filename=$beatmaps[$i];
 		$did=explode(' ',$beatmaps[$i])[0];
 		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : str_replace(['/','\\',':','*','"','<','>','|','?'],'-',$filename).'.osz';
-		if (!file_exists($opt['o'].'/'.$filename)) {
+		if (!file_exists($userinfo['savedir'].'/'.$filename)) {
 			if ($link=getdlink($did)) {
 				if (isset($opt['redownlink'])) {
 					$link=preg_replace('/http(s?):\/\/bm(\d).ppy.sh\/d\//',$opt['redownlink'],$link);
 				}
 				$file=getfile($link);
 				if (!empty($file) && strlen($file) > 20480) {
-					if (file_put_contents($opt['o'].'/'.$filename,$file,LOCK_EX)) {
+					if (file_put_contents($userinfo['savedir'].'/'.$filename,$file,LOCK_EX)) {
 						echo "Downloaded:$filename.\n";
 					} else {
 						echo "Error:Can't Save $filename.\n";
-						if (file_exists($opt['o'].'/'.$filename)) {
-							unlink($opt['o'].'/'.$filename);
+						if (file_exists($userinfo['savedir'].'/'.$filename)) {
+							unlink($userinfo['savedir'].'/'.$filename);
 						}
 					}
 				} else {
