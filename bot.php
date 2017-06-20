@@ -1,12 +1,13 @@
 <?php
 /*
 osu-bot was created by asd.
-Project URL:https://github.com/lslqtz/osu-bot/
+Project URL:https://coding.net/u/lslqtz/p/osu-bot/
 */
 set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
-$opt=getopt('d:fk:m:o:p:t:u:',array('rlt:','rgt:','only','proxy:','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
+$opt=getopt('d:fk:m:o:p:t:u:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.1.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	global $opt;
 	$curl=curl_init();
@@ -124,7 +125,7 @@ if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 
 	$opt['m']=0;
 }
 if (!isset($opt['o'],$opt['d'],$opt['k'],$opt['u'],$opt['p']) || !is_numeric($opt['d']) || !$opt['d']) {
-	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
+	die("Usage:php bot.php -o [Save Dir] -k [osu!API Key] -u [osu!Username] -p [osu!Password] -d [Before Days] [-v/--version Version] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
 }
 if (!is_dir($opt['o']) && !mkdir($opt['o'])) {
 	die("Error:Can't Create Dir.\n");
