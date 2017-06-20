@@ -35,6 +35,8 @@ Default Download Link=http(s)://bm*.ppy.sh/d/
 
 -m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)
 
+-v/--vesrion Version
+
 --only Download Only The Specified Date BeatMaps.
 
 --without-proxy-getdownlink Don't Use Proxy Login And Get Download Link(Because The Use Of Proxy Access May Cause Local Login To Fail)
