@@ -7,8 +7,10 @@ set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
 $opt=getopt('d:fm:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.3.\n"); }
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.4.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
+	$retry=0;
+	retry:
 	global $opt;
 	if (!function_exists('curl_init')) { die("Error:Can't Find curl.\n"); }
 	$curl=curl_init();
@@ -56,17 +58,21 @@ function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$w
 		curl_setopt($curl,CURLOPT_FOLLOWLOCATION,1);
 	}
 	if (!$get_effective_url) {
-		return curl_exec($curl);
+		$data=curl_exec($curl);
 	} else {
 		curl_exec($curl);
-		if ($effective_url=curl_getinfo($curl,CURLINFO_EFFECTIVE_URL)) {
-			return $effective_url;
-		} else {
-			return 0;
-		}
+		$data=curl_getinfo($curl,CURLINFO_EFFECTIVE_URL);
 	}
 	curl_close($curl);
-	unset($url,$curl,$head,$followlocation,$effective_url,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy);
+	if (!$data) {
+		if ($retry < 3) {
+			$retry++;
+			echo "Error:Can't Connect To URL,Retry:$retry.\n";
+			goto retry;
+		}
+		return 0;
+	}
+	return $data;
 }
 function getfile($url) {
 	global $opt;
@@ -85,14 +91,12 @@ function getdlink($did) {
 	} else {
 		return $location;
 	}
-	unset($did,$without_proxy,$location);
 }
 function getcookie() {
 	global $opt;
 	global $userinfo;
 	$without_proxy=isset($opt['without-proxy-getdownlink']) ? 1 : 0;
 	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($userinfo['username']).'&password='.urlencode($userinfo['password']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
-	unset($without_proxy);
 }
 function set($t,$r) {
 	global $opt;
@@ -121,7 +125,6 @@ function set($t,$r) {
 			${$t}['stars']=isset($r[3]) ? $r[3] : 0;
 			break;
 	}
-	unset($t,$r);
 }
 if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 3) {
 	$opt['m']=0;
@@ -224,5 +227,4 @@ for ($a=$opt['d'];$a>0;$a--) {
 	}
 	unset($args,$date,$beatmaps,$beatmaps_json);
 }
-unset($apilink);
 ?>
