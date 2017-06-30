@@ -6,8 +6,8 @@ Project URL:https://github.com/lslqtz/osu-bot/
 set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
-$opt=getopt('d:fm:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://coding.net/u/lslqtz/p/osu-bot/\nVersion:1.4.\n"); }
+$opt=getopt('d:fl:m:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://github.com/lslqtz/osu-bot/\nVersion:1.6.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	$retry=0;
 	retry:
@@ -129,8 +129,11 @@ function set($t,$r) {
 if (!isset($opt['m']) || !is_numeric($opt['m']) || $opt['m'] < 0 || $opt['m'] > 3) {
 	$opt['m']=0;
 }
+if (!isset($opt['l']) || !is_numeric($opt['l']) || $opt['l'] < 0) {
+	$opt['l']=0;
+}
 if (!is_numeric($opt['d']) || !$opt['d']) {
-	die("Usage:php bot.php -d [Before Days] [-v/--version Version] [-f Full Filename] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
+	die("Usage:php bot.php -d [Before Days] [-v/--version Version] [-f Full Filename] [-l Limit] [-m Mode(0:STD[Default],1:Taiko,2:CTB,3:osu!mania)] [--only] [--without-proxy-getdownlink] [--rlt/rgt=Requirement(CS:AR:OD:HP:Stars)(For Mania:CS=Keys)] [--reapilink=Replace-API-Link] [--redownlink=Replace-Download-Link] [--downcookie=Download-Cookie] [--downreferer=Download-Referer] [--downuseragent=Download-UserAgent] [--proxy=HTTP/HTTPS Proxy Address] [--socks4-proxy=Socks4 Proxy Address] [--socks5-proxy=Socks5 Proxy Address].\n");
 }
 echo "Enter Your osu! Username:";
 $userinfo['username']=trim(fgets(STDIN));
@@ -155,6 +158,7 @@ if (empty($userinfo['savedir'])) {
 if (!is_dir($userinfo['savedir']) && !mkdir($userinfo['savedir'])) {
 	die("Error:Can't Create Dir.\n");
 }
+$limit=1;
 $apilink=isset($opt['reapilink']) ? $opt['reapilink'] : 'https://osu.ppy.sh/api/';
 for ($a=$opt['d'];$a>0;$a--) {
 	$beatmaps=[];
@@ -195,6 +199,9 @@ for ($a=$opt['d'];$a>0;$a--) {
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
 	for ($i=0;$i<count($beatmaps);$i++) {
+		if ($opt['l'] && $limit > $opt['l']) {
+			die("Download Completed!\n");
+		}
 		$filename=$beatmaps[$i];
 		$did=explode(' ',$beatmaps[$i])[0];
 		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : str_replace(['/','\\',':','*','"','<','>','|','?'],'-',$filename).'.osz';
@@ -206,6 +213,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 				$file=getfile($link);
 				if (!empty($file) && strlen($file) > 20480) {
 					if (file_put_contents($userinfo['savedir'].'/'.$filename,$file,LOCK_EX)) {
+						$limit++;
 						echo "Downloaded:$filename.\n";
 					} else {
 						echo "Error:Can't Save $filename.\n";
