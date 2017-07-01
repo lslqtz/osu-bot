@@ -198,7 +198,6 @@ for ($a=$opt['d'];$a>0;$a--) {
 		unset($rltyes,$rgtyes);
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
-	print_r($beatmaps);
 	for ($i=0;$i<count($beatmaps);$i++) {
 		if ($opt['l'] && $limit > $opt['l']) {
 			die("Download Completed!\n");
