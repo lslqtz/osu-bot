@@ -7,7 +7,7 @@ set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
 $opt=getopt('d:fl:m:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://github.com/lslqtz/osu-bot/\nVersion:1.6.\n"); }
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://github.com/lslqtz/osu-bot/\nVersion:1.7.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	$retry=0;
 	retry:
@@ -86,7 +86,7 @@ function getdlink($did) {
 		getcookie();
 	}
 	$location=curl("https://osu.ppy.sh/d/$did",1,1,1,1,0,1,'cookie.txt',1,1,1,$without_proxy);
-	if ($location === 'http://osu.ppy.sh/forum/ucp.php?mode=login' || $location[0] === 'http://osu.ppy.sh/forum/ucp.php?mode=login') {
+	if ($location === 'http://osu.ppy.sh/forum/ucp.php?mode=login' || $location === "https://osu.ppy.sh/d/$did") {
 		return 0;
 	} else {
 		return $location;
