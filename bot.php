@@ -86,7 +86,7 @@ function getdlink($did) {
 		getcookie();
 	}
 	$location=curl("https://osu.ppy.sh/d/$did",1,1,1,1,0,1,'cookie.txt',1,1,1,$without_proxy);
-	if ($location === 'http://osu.ppy.sh/forum/ucp.php?mode=login' || $location === "https://osu.ppy.sh/d/$did") {
+	if ($location === 'http://osu.ppy.sh/forum/ucp.php?mode=login') {
 		return 0;
 	} else {
 		return $location;
@@ -198,6 +198,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 		unset($rltyes,$rgtyes);
 	}
 	$beatmaps=array_merge(array_unique($beatmaps,SORT_NUMERIC));
+	print_r($beatmaps);
 	for ($i=0;$i<count($beatmaps);$i++) {
 		if ($opt['l'] && $limit > $opt['l']) {
 			die("Download Completed!\n");
@@ -217,15 +218,14 @@ for ($a=$opt['d'];$a>0;$a--) {
 						echo "Downloaded:$filename.\n";
 					} else {
 						echo "Error:Can't Save $filename.\n";
-						if (file_exists($userinfo['savedir'].'/'.$filename)) {
-							unlink($userinfo['savedir'].'/'.$filename);
-						}
+						unlink($userinfo['savedir'].'/'.$filename);
 					}
 				} else {
 					echo "Error:Can't Download $filename.\n";
 				}
 			} else {
 				echo "Error:Can't Get Download Link.\n";
+				unlink('cookie.txt');
 			}
 		}
 		unset($did,$file,$link,$filename);
