@@ -7,7 +7,7 @@ set_time_limit(0);
 error_reporting(0);
 if (PHP_SAPI !== 'cli') { die(); }
 $opt=getopt('d:fl:m:o:t:v',array('rlt:','rgt:','only','proxy:','version','socks4-proxy:','socks5-proxy:','reapilink:','redownlink:','downcookie:','downreferer:','downuseragent:','without-proxy-getdownlink'));
-if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://github.com/lslqtz/osu-bot/\nVersion:1.7.\n"); }
+if (isset($opt['v']) || isset($opt['version'])) { die("osu-bot was created by asd.\nProject URL:https://github.com/lslqtz/osu-bot/\nVersion:1.8.\n"); }
 function curl($url,$head,$followlocation,$get_effective_url,$without_postdata,$without_cookie,$without_cookiejar,$without_cookiefile,$without_timeout,$without_referer,$without_useragent,$without_proxy) {
 	$retry=0;
 	retry:
@@ -204,7 +204,7 @@ for ($a=$opt['d'];$a>0;$a--) {
 		}
 		$filename=$beatmaps[$i];
 		$did=explode(' ',$beatmaps[$i])[0];
-		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : str_replace(['/','\\',':','*','"','<','>','|','?'],'-',$filename).'.osz';
+		$filename=(!isset($opt['f']) && is_numeric($did)) ? $did.'.osz' : str_replace(['/','\\',':','*','"','<','>','|','?','~'],'-',$filename).'.osz';
 		if (!file_exists($userinfo['savedir'].'/'.$filename)) {
 			if ($link=getdlink($did)) {
 				if (isset($opt['redownlink'])) {
