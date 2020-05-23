@@ -4,13 +4,13 @@ Bulk download the specified date(or specified date to today) all osu! Ranked bea
 
 ## License
 
-osu-bot is licensed under [AGPL v3.0](LICENSE).It's prohibited to use any other non-commercial/commercial items and sites,except as permitted.If you need permission,Please contact me by email,My E-Mail:admin@acgn.xyz.
+osu-bot is licensed under [AGPL v3.0](LICENSE), It's prohibited to use any other non-commercial/commercial items and sites,except as permitted. If you need permission, please contact me by email(admin@acgn.xyz).
 
 ## How to use?
 
-Install PHP 5.3+,download bot.php and use command prompt.
+Install PHP 5.3+, download bot.php and use command prompt.
 
-For Windows:you can download php.zip,and run shell.bat.
+For Windows: you can download php.zip, and run shell.bat.
 
 ### Usage
 ```bash
@@ -18,7 +18,7 @@ php bot.php -d [Before Days] [-v/--version Version] [-f Full Filename] [-l Limit
 ```
 
 ### Default parameters
-You must have osu!Username,osu!Password and osu!APIKey!
+You must have osu! Username/Password and osu! APIKey!
 
 Default APILink=https://osu.ppy.sh/api/
 
