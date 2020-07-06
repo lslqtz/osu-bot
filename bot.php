@@ -96,7 +96,9 @@ function getcookie() {
 	global $opt;
 	global $userinfo;
 	$without_proxy=isset($opt['without-proxy-getdownlink']) ? 1 : 0;
-	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'redirect=%2F&username='.urlencode($userinfo['username']).'&password='.urlencode($userinfo['password']).'&autologin=on&login=login',0,'cookie.txt',1,1,1,1,$without_proxy);
+	$opt['downreferer']='https://osu.ppy.sh/forum/ucp.php?mode=login';
+	curl('https://osu.ppy.sh/forum/ucp.php?mode=login',0,0,0,'username='.urlencode($userinfo['username']).'&password='.urlencode($userinfo['password']).'&autologin=on&redirect=index.php&sid=&login=Login',0,'cookie.txt',1,1,0,1,$without_proxy);
+	unset($opt['downreferer']);
 }
 function set($t,$r) {
 	global $opt;
